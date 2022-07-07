@@ -23,11 +23,25 @@ public:
         mn=root->val;
         solve(root->right,ans,mn);
     }
-    int getMinimumDifference(TreeNode* root) {
-        int ans=INT_MAX;
-        int mn=-1;
+    int ans;
+    TreeNode *pre=NULL;
+    void solve1(TreeNode* root)
+    {
+         if(!root) return;
         
-        solve(root,ans,mn);
+        solve1(root->left);
+        if(pre)
+        {
+            ans=min(ans,abs(root->val-pre->val));
+        }
+        pre=root;
+        solve1(root->right);
+    }
+    int getMinimumDifference(TreeNode* root) {
+         ans=INT_MAX;
+        int mn=-1;
+        solve1(root);
+        // solve(root,ans,mn);
             return ans;
     }
 };
