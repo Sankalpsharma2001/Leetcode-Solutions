@@ -15,11 +15,19 @@ public:
         ll int ans=0;
         while(a>=b)
         {
-            ll int q=0;
-            while(a>(b<<(q+1)))
-                q++;
-            ans+=(1<<q);
-            a=a-(b<<q);
+            ll t=1,x=b;
+            while(x<=a-x)
+            {
+                x+=x;
+                t+=t;
+            }
+            ans+=t;
+            a-=x;
+            // ll int q=0;
+            // while(a>(b<<(q+1)))
+            //     q++;
+            // ans+=(1<<q);
+            // a=a-(b<<q);
         }
        
         return (pos)?ans:-ans;
