@@ -31,13 +31,16 @@ class Solution{
             if(x.second==mx)
             {
                 ans.push_back(x.first);
+                ans.push_back(to_string(mx));
+                return ans;
             }
         }
-        sort(ans.begin(),ans.end());
-        vector<string> res;
-        res.push_back(ans[0]);
-        res.push_back(to_string(mx));
-    return res;
+        return ans;
+        // sort(ans.begin(),ans.end());
+        // vector<string> res;
+        // res.push_back(ans[0]);
+        // res.push_back(to_string(mx));
+    // return res;
     }
     
 };
