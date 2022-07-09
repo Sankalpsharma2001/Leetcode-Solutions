@@ -29,20 +29,20 @@ public:
                     return root->left?root->left:root->right;
                // inorder predecessor
                 
-                TreeNode* temp=root->left;
-                while(temp->right)
-                    temp=temp->right;
+//                 TreeNode* temp=root->left;
+//                 while(temp->right)
+//                     temp=temp->right;
               
-                root->val=temp->val;
+//                 root->val=temp->val;
                 
-                root->left=deleteNode(root->left,temp->val);
+//                 root->left=deleteNode(root->left,temp->val);
                 
                   // inordered successor
-                // TreeNode *temp=root->right;
-                // while(temp->left)
-                //     temp=temp->left;
-                // root->val=temp->val;
-                // root->right=deleteNode(root->right,temp->val);
+                TreeNode *temp=root->right;
+                while(temp->left)
+                    temp=temp->left;
+                root->val=temp->val;
+                root->right=deleteNode(root->right,temp->val);
             }
         }
         return root;
