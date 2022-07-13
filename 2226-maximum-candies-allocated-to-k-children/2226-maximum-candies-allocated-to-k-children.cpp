@@ -16,7 +16,7 @@ public:
        int high=*max_element(candies.begin(),candies.end());
         while(low<=high)
         {
-            int mid=low+(high-low)/2;
+            int mid=(high+low)>>1;
             if(solve(candies,k,mid))
             {
                 ans=mid;
