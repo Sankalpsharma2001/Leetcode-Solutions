@@ -12,10 +12,10 @@ class Solution{
         for(int i=0;i<n-1;i++)
         {
             bool flag=false;
-            for(int j=i+1;j<n;j++)
+            for(int j=0;j<n-1-i;j++)
             {
-                if(roll[i]>roll[j])
-                {swap(roll[j],roll[j]);
+                if(roll[j]>roll[j+1])
+                {swap(roll[j],roll[j+1]);
                 flag=true;
                 c+=2;    
                 }
