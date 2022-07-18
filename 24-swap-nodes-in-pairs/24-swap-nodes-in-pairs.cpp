@@ -15,24 +15,19 @@ public:
           return NULL;
         if(!head->next)
             return head;
-           ListNode *temp=head->next;       
-            head->next=swapPairs(temp->next);
-        temp->next=head;
-        return temp;
-//         ListNode *cur=head;
-//         ListNode *pre=NULL;
-//         if(head->next) head=head->next;
-//         while(cur and cur->next)
-//         {
-//             ListNode *nex=cur->next;
-//             if(pre)
-//                 pre->next=nex;
-//             pre=nex;
-//             cur->next=nex->next;
-//             nex->next=cur;
-            
-//             cur=cur->next;
-//         }
-//         return head;
+     
+        ListNode *ans=new ListNode(0),*t=ans;
+        ans->next=head;
+        while(head and head->next)
+        {
+            ListNode *nex=head->next;
+            head->next=nex->next;
+            nex->next=head;
+            t->next=nex;
+            t=head;
+            head=t->next;
+        }
+        return ans->next;
+     
     }
 };
