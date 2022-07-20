@@ -23,10 +23,12 @@ public:
     {
         if(!root)
             return 0;
-        int l=solve(root->left);
-        int r=solve(root->right);
-        ans=max({ans,(s-l)*l,(s-r)*r});
-        return l+r+root->val;
+        // int l=;
+        // int r=solve(root->right);
+        int subtree=solve(root->left)+solve(root->right)+root->val;
+        ans=max(ans,(s-subtree)*subtree);
+        // return l+r+root->val;
+        return subtree;
      }
     int mod=1e9+7;
     int maxProduct(TreeNode* root) {
