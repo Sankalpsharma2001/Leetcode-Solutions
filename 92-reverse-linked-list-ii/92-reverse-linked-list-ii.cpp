@@ -10,52 +10,33 @@
  */
 class Solution {
 public:
-    ListNode* reverse(ListNode *head)
-    {
-        ListNode *cur=head;
-        ListNode *pre=NULL;
-        while(cur)
-        {
-            ListNode *nxt=cur->next;
-            cur->next=pre;
-            pre=cur;
-            cur-nxt;
-        }
-        return pre;
-    }
-    
+   
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        if(!head or !head->next)
-            return head;
-        if(left==right)
-            return head;
-        ListNode *f=head;
-        int c=1;
-        ListNode *fpre=NULL;
-        while(f and c<left)
-        {
-            c++;
-            fpre=f;
-            f=f->next;
-        }
-        ListNode *cur=f;
-        ListNode *pre=fpre;
-        for(int i=left;i<=right;i++)
-        {
-            ListNode *nxt=cur->next;
-            cur->next=pre;
-            pre=cur;
-            cur=nxt;
+          if(head == NULL || head->next == NULL) return head;
         
-        }
-        if(left==1)
-        {
-            head=pre;
-        }
-        if(fpre)
-        fpre->next=pre;
-        f->next=cur;
-        return head;
+        ListNode* dummy = new ListNode(-1);
+        dummy->next = head;
         
+        ListNode* it = dummy;
+        ListNode* pre_it = NULL;
+        for(int i = 0; i < left; i++){
+            pre_it = it;
+            it = it->next;
+        }
+        
+        ListNode* itR = it;
+        ListNode* pre_R = pre_it;
+        
+        for(int i = left; i <= right; i++){
+            ListNode* forward = itR->next;
+            itR->next = pre_R;
+            pre_R = itR;
+            itR = forward;
+        }
+        
+        pre_it->next = pre_R;
+        it->next = itR;
+		
+        return dummy->next;      
     }
 };
