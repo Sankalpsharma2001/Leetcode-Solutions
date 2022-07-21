@@ -3,7 +3,6 @@ public:
     int solve(vector<vector<int>>& grid,int i1,int j1,int i2,int j2,vector<vector<vector<vector<int>>>> &dp)
     {
         int m=grid[0].size(),n=grid.size();
-        // int i2=j1+i1-j2;
         
 if(j1>=m || i1>=n || j2>=m || i2>=n || grid[i1][j1]==-1 || grid[i2][j2]==-1)
             return -1e8;
@@ -15,10 +14,11 @@ if(j1>=m || i1>=n || j2>=m || i2>=n || grid[i1][j1]==-1 || grid[i2][j2]==-1)
         }
         
         int x=0;
-        if(i1!=i2)
-            x=grid[i1][j1]+grid[i2][j2];
-        else
-             x=grid[i1][j1];
+        if(i1==i2 and j1==j2)
+            x=grid[i1][j1];
+        else      x=grid[i1][j1]+grid[i2][j2];
+      
+             
       // P1     |      P2
     //   DOWN    |     DOWN
     //   DOWN    |     RIGHT
