@@ -5,7 +5,7 @@ public:
         if(nums.size()==0)
             return {-1,-1};
         int idx1=lower_bound(nums.begin(),nums.end(),target)-nums.begin();
-        int idx2=lower_bound(nums.begin(),nums.end(),target+1)-nums.begin();
+        int idx2=upper_bound(nums.begin(),nums.end(),target)-nums.begin();
        if(!binary_search(nums.begin(),nums.end(),target))    return {-1,-1};
         if(nums[idx1]!=target)
             return {-1,-1};
