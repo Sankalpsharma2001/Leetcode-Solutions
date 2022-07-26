@@ -3,24 +3,31 @@ public:
     vector<vector<int>> findWinners(vector<vector<int>>& matches) {
         vector<vector<int>> ans;
         int n=matches.size();
-        set<int> s;
-        vector<int> vis(1e5+15,0);
+        unordered_map<int,int> m;
         for(int i=0;i<n;i++)
         {
-            s.insert(matches[i][0]);
-            s.insert(matches[i][1]);
-
-              vis[matches[i][1]]++;
+            m[matches[i][1]]++;
+        
         }
         vector<int> v;
         vector<int> v1;
-        for(int i=0;i<=1e5+5;i++)
+        for(auto &x:m)
         {
-            if(vis[i]==1)
-                v1.push_back(i);
-            else if(vis[i]==0 and s.find(i)!=s.end())
-                v.push_back(i);
+            if(x.second==1)
+                v1.push_back(x.first);
+            
         }
+        for(int i=0;i<n;i++)
+        {
+            if(m[matches[i][0]]==0)
+            {
+                v.push_back(matches[i][0]);
+                m[matches[i][0]]=1;
+            }
+        }
+        sort(v.begin(),v.end());
+        sort(v1.begin(),v1.end());
+        
         ans.push_back(v);
         ans.push_back(v1);
         return ans;
