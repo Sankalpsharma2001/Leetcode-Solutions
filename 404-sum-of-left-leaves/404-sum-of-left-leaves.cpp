@@ -16,16 +16,33 @@ public:
      ios_base::sync_with_stdio(0);
         cin.tie(0);
         cout.tie(0);
-        if(!root) return 0;
-        int sum=0;
-        if(root->left && !root->left->left && !root->left->right)
-        {
-            sum+=root->left->val;
+        if(root==NULL){
+        return 0;
+    }
+      if(root==NULL){
+        return 0;
+    }
+    queue<TreeNode*>q;
+    q.push(root);
+    int sum=0;
+    while(!q.empty()){
+        int n=q.size();
+        for(int i=0;i<n;i++){
+            TreeNode* node=q.front();
+            q.pop();
+            if(node->left){
+                if(!node->left->left&&!node->left->right){
+                    sum+=node->left->val;
+                }
+                else{
+                    q.push(node->left);
+                }
+            }
+            if(node->right){
+                q.push(node->right);
+            }
         }
-       
-        sum+=sumOfLeftLeaves(root->left);
-        
-        sum+=sumOfLeftLeaves(root->right);
-        return sum;
+    }
+    return sum;
     }
 };
