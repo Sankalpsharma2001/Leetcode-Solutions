@@ -11,23 +11,21 @@
  */
 class Solution {
 public:
-    int sum=0;
-    void solve(TreeNode* root)
-    {
-        if(!root) return;
-        if(root->left && !root->left->left && !root->left->right)
-        {
-            sum+=root->left->val;
-        }
-        solve(root->left);
-        solve(root->right);
-    }
+    
     int sumOfLeftLeaves(TreeNode* root) {
      ios_base::sync_with_stdio(0);
         cin.tie(0);
         cout.tie(0);
-        sum=0;
-        solve(root);
+        if(!root) return 0;
+        int sum=0;
+        if(root->left && !root->left->left && !root->left->right)
+        {
+            sum+=root->left->val;
+        }
+       
+        sum+=sumOfLeftLeaves(root->left);
+        
+        sum+=sumOfLeftLeaves(root->right);
         return sum;
     }
 };
