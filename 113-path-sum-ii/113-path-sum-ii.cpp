@@ -23,6 +23,7 @@ public:
         }
         solve(root->left,targetSum,s+root->val,v);
         solve(root->right,targetSum,s+root->val,v);
+        v.pop_back();
     } 
         
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
