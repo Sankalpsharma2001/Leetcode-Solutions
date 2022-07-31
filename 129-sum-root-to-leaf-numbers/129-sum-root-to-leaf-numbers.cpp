@@ -11,19 +11,31 @@
  */
 class Solution {
 public:
-    int ans=0;
-    void solve(TreeNode *root,int n)
-    {
-        if(!root) return;
-        if(!root->left and !root->right)
-        {
-            ans+=(n*10+root->val);
-        }
-        solve(root->left,n*10+root->val);
-        solve(root->right,n*10+root->val);
-    }
     int sumNumbers(TreeNode* root) {
-        solve(root,0);
+    if(!root) return 0;
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        int ans=0;
+        while(!q.empty())
+        {
+             auto it=q.front();
+            q.pop();
+            TreeNode *t=it.first;
+             it.second=it.second*10+t->val;
+            if(t->left)
+            {
+                q.push({t->left,it.second});
+            }
+            if(t->right)
+            {
+                q.push({t->right,it.second});
+            }
+            if(!t->left and !t->right)
+            {
+                ans+=it.second;
+            }
+            
+        }
         return ans;
     }
 };
