@@ -9,19 +9,33 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
 class Solution {
 public:
-    map<int,vector<pair<int,int>>> m;
-    void dfs(TreeNode *root,int c,int r)
-    {
-        if(!root) return;
-        m[c].push_back({r,root->val});
-        dfs(root->left,c-1,r+1);
-        dfs(root->right,c+1,r+1);
-    }
+  
+   
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         vector<vector<int>> ans;
-        dfs(root,0,0);
+          map<int,vector<pair<int,int>>> m;
+        queue<pair<TreeNode*,pair<int,int>>> q;
+        q.push({root,{0,0}}); // val row col
+        while(!q.empty())
+        {
+            auto f=q.front();
+            int r=f.second.first;
+            int c=f.second.second;
+            m[c].push_back({r,f.first->val});
+            q.pop();
+            if(f.first->left)
+            {
+                
+                q.push({f.first->left,{r+1,c-1}});
+            }
+            if(f.first->right)
+            {
+                q.push({f.first->right,{r+1,c+1}});
+            }
+        }
         for(auto x:m)
         {
             vector<pair<int,int>> p=x.second;
