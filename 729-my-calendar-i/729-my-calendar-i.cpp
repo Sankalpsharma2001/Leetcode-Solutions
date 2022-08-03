@@ -1,23 +1,16 @@
 class MyCalendar {
 public:
-   vector<pair<int,int>> p;
+    map<int,int> m;
+    
     MyCalendar() {
         
     }
     
     bool book(int start, int end) {
-       for(auto x:p)
-       {
-//            if(x.first<start and x.second>start)
-//                return false;
-//            if(x.first<end and x.second>end)
-//                return false;
-//            if(x.first>=start and x.second<end) return false;
-           
-//            if(x.first>=start and x.second<=end) return false;
-           if(max(x.first,start)<min(end,x.second)) return false;
-       }
-        p.push_back({start,end});
+     auto it=m.lower_bound(start);
+        if(it!=m.end() and it->first<end) return false;
+        if(it!=m.begin() and (--it)->second>start) return false;
+        m.insert({start,end});
         return true;
     }
 };
