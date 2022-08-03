@@ -8,14 +8,14 @@ public:
     bool book(int start, int end) {
        for(auto x:p)
        {
-           if(x.first<start and x.second>start)
-               return false;
-           if(x.first<end and x.second>end)
-               return false;
-           if(x.first>=start and x.second<end) return false;
+//            if(x.first<start and x.second>start)
+//                return false;
+//            if(x.first<end and x.second>end)
+//                return false;
+//            if(x.first>=start and x.second<end) return false;
            
-           if(x.first>=start and x.second<=end) return false;
-           
+//            if(x.first>=start and x.second<=end) return false;
+           if(max(x.first,start)<min(end,x.second)) return false;
        }
         p.push_back({start,end});
         return true;
