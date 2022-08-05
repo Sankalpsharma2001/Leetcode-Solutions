@@ -11,30 +11,22 @@
  */
 class Solution {
 public:
+    void dfs(TreeNode* root,vector<vector<int>> &ans,vector<int> v,int level)
+    {
+        if(!root) return;
+        
+        if(level==ans.size())
+        ans.push_back({root->val});
+        else
+            ans[level].push_back(root->val);
+        dfs(root->left,ans,v,level+1);
+        dfs(root->right,ans,v,level+1);
+    }
     vector<vector<int>> levelOrder(TreeNode* root) {
-             ios_base::sync_with_stdio(0);
-        cin.tie(0);
-        cout.tie(0);
-         vector<vector<int>> ans; 
-        if(root==NULL)
-               return ans;
-          
-            queue<TreeNode*> q;
-            q.push(root);
-         while(!q.empty())
-         {
-              int sz=q.size();
-		       vector<int> v;
-               for(int i=0;i<sz;i++){
-                   auto temp=q.front();
-                    q.pop();
-                    v.push_back(temp->val);
-
-                   if(temp->left) q.push(temp->left);
-                   if(temp->right) q.push(temp->right);
-                }
-		        ans.push_back(v);
-         }
-          return ans; 
+       vector<vector<int>> ans;
+        vector<int> v;
+        int level=0;
+        dfs(root,ans,v,level);
+        return ans;
     }
 };
