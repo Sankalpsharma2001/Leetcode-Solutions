@@ -17,6 +17,19 @@ public:
             if(mn<nums[0] and nums[0]<mx)
             return 0;
          }
-        return searchPeak(nums,0,nums.size()-1);
+        int low=0,high=n-1;
+        while(low<high)
+        {
+            int mid=(low+high)/2;
+            if(nums[mid]<nums[mid+1])
+            {
+                low=mid+1;
+            }
+            else
+                high=mid;
+            
+        }
+        return low;
+        // return searchPeak(nums,0,nums.size()-1);
     }
 };
