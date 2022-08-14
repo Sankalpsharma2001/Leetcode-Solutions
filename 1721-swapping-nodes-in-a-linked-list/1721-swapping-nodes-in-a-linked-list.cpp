@@ -10,40 +10,26 @@
  */
 class Solution {
 public:
-    int count(ListNode *head)
-    {
-        int c=0;
-        while(head)
-        {head=head->next;
-            c++;
-        }
-        return c;
-    }
+  
     ListNode* swapNodes(ListNode* head, int k) {
-        ListNode *cur=head,*pre=NULL;
-        int size=count(head);
-        int c=1;
-        while(c<k)
+       ListNode* left=head;
+        ListNode* right=head;
+        ListNode* cur=head;
+         int count=1;
+        while(cur)
         {
-            pre=cur;
+            if(count<k)
+            {
+                left=left->next;
+            }
+            if(count>k)
+                right=right->next;
             cur=cur->next;
-            c++;
+            count++;
         }
-        ListNode *f=cur;
-       int x=size-k+1;
-        c=1;
-        cur=head;
-        ListNode *pre1=NULL;
-        while(c<x)
-        {
-            pre1=cur;
-             cur=cur->next;
-            c++;
-        }
-        int v=f->val;
-        f->val=cur->val;
-        cur->val=v;
+        int v=right->val;
+        right->val=left->val;
+        left->val=v;
         return head;
-        
     }
 };
