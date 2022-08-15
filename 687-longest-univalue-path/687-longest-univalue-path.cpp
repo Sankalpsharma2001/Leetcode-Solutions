@@ -11,18 +11,23 @@
  */
 class Solution {
 public:
-    int fun(TreeNode *root,int data)
+   
+    int dfs(TreeNode *root,int &ans)
     {
         if(!root) return 0;
-        if(data!=root->val)
-            return 0;
-        return 1+max(fun(root->left,data),fun(root->right,data));
+        int l=dfs(root->left,ans);
+        int r=dfs(root->right,ans);
+        if(!root->left or root->left->val!=root->val)
+            l=0;
+        if(!root->right or root->right->val!=root->val)
+            r=0;
+        ans=max(ans,l+r);
+        return 1+max(l,r);
     }
     int longestUnivaluePath(TreeNode* root) {
         if(!root) return 0;
-        int l=fun(root->left,root->val);
-        int r=fun(root->right,root->val);
-        return max(l+r,max(longestUnivaluePath(root->left),longestUnivaluePath(root->right)));
-        
+            int ans=0;
+        dfs(root,ans);
+        return ans;
     }
 };
