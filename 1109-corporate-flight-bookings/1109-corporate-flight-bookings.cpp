@@ -7,11 +7,14 @@ public:
             ans[bookings[i][0]]+=bookings[i][2];
             ans[bookings[i][1]+1]-=bookings[i][2];
         }
-        for(int i=1;i<=n;i++)
-            ans[i]+=ans[i-1];
-        vector<int> res;
-        for(int i=1;i<=n;i++)
-            res.push_back(ans[i]);
+        vector<int> res(n,0);
+        for(int i=0;i<n;++i){
+            if(i==0)
+                res[i] = ans[i+1];
+            else
+                res[i] = res[i-1] + ans[i+1];
+        }
+      
         return res;
     }
 };
