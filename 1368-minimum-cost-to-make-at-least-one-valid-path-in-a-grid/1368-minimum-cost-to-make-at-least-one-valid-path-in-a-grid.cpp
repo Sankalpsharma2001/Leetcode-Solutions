@@ -1,55 +1,54 @@
+class com{
+    public:
+    bool operator()(vector<int>&a,vector<int> &b)
+    {
+        return a[2]>b[2];
+    }
+};
 class Solution {
     bool isValid(int x,int y,int n,int m)
     {
-        return x>=0 && y>=0 && x<n && y<m;
-    }
+        return x>=0 && y>=0 && x<n  && y<m;
+    }   
+        
 public:
     int minCost(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-        // 1 right
-        // 2 left
-        // 3 lower
-        // 4 upper
-        vector<vector<int>> dis(n,vector<int>(m,1000));
-        vector<pair<int,int>> p={{0,0},{0,1},{0,-1},{1,0},{-1,0}};
-        queue<pair<int,int>> q;
-        q.push({0,0});
-        dis[0][0]=0;
-        int dx[]={1,-1,0,0};
-        int dy[]={0,0,-1,1};
-        while(!q.empty())
+        int n=grid.size(),m=grid[0].size();
+        priority_queue<vector<int>,vector<vector<int>>,com> pq;
+        vector<vector<int>> vis(n,vector<int>(m,0));
+        int dx[]={0,0,1,-1};
+        int dy[]={1,-1,0,0};
+        pq.push({0,0,0});
+       
+        while(!pq.empty())
         {
-            auto f=q.front();
-            q.pop();
-            int x=f.first;
-            int y=f.second;
-            
+            vector<int> t=pq.top();
+            pq.pop();
+            int cost=t[2];
+            int x=t[0];
+            int y=t[1];
+            if(x==n-1 && y==m-1)
+                return cost;
+            if(vis[x][y]==1) continue;
+           vis[x][y]=1;
             for(int ind=0;ind<4;ind++)
             {
-                int xx=dx[ind]+x;
-                int yy=dy[ind]+y;
-                if(isValid(xx,yy,n,m))
-                {
-                    if(dx[ind]==p[grid[x][y]].first && dy[ind]==p[grid[x][y]].second)
-                    {
-                        if(dis[xx][yy]>dis[x][y])
-                        {dis[xx][yy]=dis[x][y];
-                        q.push({xx,yy});
-                        }
-                    }
-                    else
-                    {
-                        if(dis[xx][yy]>dis[x][y]+1)
-                        {
-                            dis[xx][yy]=dis[x][y]+1;
-                            q.push({xx,yy});
-                        }
-                        
-                    }
-                }
+                int nx=x+dx[ind];
+                int ny=y+dy[ind];
+              if(isValid(nx,ny,n,m) && !vis[nx][ny]) 
+              {
+                  
+                  if(grid[x][y]==ind+1)
+                  {
+                      pq.push({nx,ny,cost});
+                  }
+                  else
+                  {
+                      pq.push({nx,ny,cost+1});
+                  }
+              }
             }
         }
-        return dis[n-1][m-1];
+        return -1;
     }
 };
