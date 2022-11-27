@@ -11,9 +11,19 @@
 class Solution {
 public:
     ListNode* removeNodes(ListNode* head) {
-        if(!head)
-            return NULL;
-        head->next=removeNodes(head->next);
-        return head->next && head->next->val>head->val?head->next:head;
+       vector<int> v;
+        while(head)
+        {
+            while(v.size() && v.back()<head->val) v.pop_back();
+            v.push_back(head->val);
+            head=head->next;
+        }
+        ListNode *ans=new ListNode(-1),*cur=ans;
+        for(auto &x:v)
+        {
+            cur->next=new ListNode(x);
+            cur=cur->next;
+        }
+        return ans->next;
     }
 };
