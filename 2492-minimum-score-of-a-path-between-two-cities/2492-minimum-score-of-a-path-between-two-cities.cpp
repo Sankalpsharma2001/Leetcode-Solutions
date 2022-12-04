@@ -17,26 +17,20 @@ for(int i=0;i<m;i++)
     
 
 }
- priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;// min heap (dis,from)
-vector<int> dis(n+2,INT_MAX); // dis array
-dis[1]=0;
-pq.push(make_pair(0,1)); //(dis,from)
-while(!pq.empty())
-{
-    auto p=pq.top();
-    pq.pop();
-    int idx=p.second;
-    int w=p.first;
-    for(auto &it:adj[idx])
-    {
-        ans=min(ans,it.second);
-        if(dis[it.first]>dis[idx]+it.second)
-        {
-            dis[it.first]=dis[idx]+it.second;
-            pq.push({dis[it.first],it.first});
+  vector<int> vis(n+1, 0);
+        queue<int> q;
+        q.push(1); vis[1] = 1;    //run bfs from 1
+        while(!q.empty()){
+            auto node = q.front();
+            q.pop();
+            for(auto i: adj[node]){
+                ans = min(ans, i.second);   //check for min path length
+                if(vis[i.first] != 1){
+                    vis[i.first] = 1;
+                    q.push(i.first);
+                }
+            }
         }
-    }
-}
- return ans;       
+        return ans;
     }
 };
