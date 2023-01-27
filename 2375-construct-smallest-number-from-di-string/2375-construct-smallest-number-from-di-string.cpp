@@ -3,11 +3,30 @@ public:
     string ans="987654321";
     string smallestNumber(string pattern) {
         // BACKTRACKING
-        string s="";
-        vector<int> vis(10,0);
-        solve(pattern,vis,-1,s);
-        return ans;
+        // string s="";
+        // vector<int> vis(10,0);
+        // solve(pattern,vis,-1,s);
+        // return ans;
         
+        // Stack
+         int n = pattern.size();
+        
+        stack<int> st;
+        
+        string num = "";
+        
+        for(int i=0; i<=n; i++) {
+            st.push(i);
+            
+            if(i == n || pattern[i] == 'I') {
+                while(st.size()) {
+                    num += (st.top() + '1');
+                    st.pop();
+                }
+            }
+        }
+        
+        return num;
         
          // GREEDY
         // int n=pattern.size();
