@@ -85,33 +85,29 @@ class Solution{
     Node *createTree(int parent[], int N)
     {
         // Your code here
-        int par;
-        unordered_map<int,vector<int>> m;
+         Node *root,*ptr;
+        vector<Node*> vn;
+        for(int i=0;i<N;i++) 
+             ptr=new Node(i),vn.push_back(ptr);
+             
+             
         for(int i=0;i<N;i++)
         {
             if(parent[i]==-1)
             {
-                par=i; 
+                root=vn[i];
+            }
+            else if(vn[parent[i]]->left==NULL)
+            {
+                vn[parent[i]]->left=vn[i];
             }
             else
-            m[parent[i]].push_back(i);
-        }
-        map<int,Node*> tree;
-        for(int i=0;i<N;i++)
-        {
-            tree[i]=new Node(i);
-        }
-        for(int i=0;i<N;i++)
-        {
-            if(m.find(i)!=m.end())
             {
-                tree[i]->left=tree[m[i][0]];
-                if(m[i].size()>1)
-                tree[i]->right=tree[m[i][1]];
+                vn[parent[i]]->right=vn[i];
             }
         }
-        return tree[par];
-        
+        return root;
+       
         
     }
 };
