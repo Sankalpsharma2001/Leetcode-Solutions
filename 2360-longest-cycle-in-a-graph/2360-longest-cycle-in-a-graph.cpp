@@ -2,24 +2,27 @@ class Solution {
 public:
     int ans,c;
     bool flag;
-    void dfs(int node,vector<int> &vis,vector<int> &dvis,vector<vector<int>> &adj,vector<int> & count)
+    void dfs(int node,int par,vector<int> &vis,vector<int> &dvis,vector<vector<int>> &adj,vector<int> & count)
     {
         vis[node]=1;
        dvis[node]=1;
+        if(par==-1)
+            count[node]=1;
+        else
+        count[node]=count[par]+1;
     for(auto it:adj[node])
     {
         if(!vis[it])
         {
-            c++;
-            count[it]=c;
-            dfs(it,vis,dvis,adj,count);
+           
+            // count[it]=c;
+            dfs(it,node,vis,dvis,adj,count);
            
         }
         else if(dvis[it]==1)
         {
-            c++;
-            count[it]=c-count[it];
-            ans=max(ans,count[it]);
+           
+            ans=max(ans,count[node]-count[it]+1);
             flag=true;
             
         }
@@ -43,7 +46,7 @@ public:
             {
                 c=0;
                 count.clear();
-                dfs(i,vis,dvis,adj,count);
+                dfs(i,-1,vis,dvis,adj,count);
             }
         }
         return flag==false?-1:ans;
