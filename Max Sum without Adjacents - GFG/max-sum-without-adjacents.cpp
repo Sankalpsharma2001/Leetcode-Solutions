@@ -25,15 +25,19 @@ public:
 	   //return solve(n-1,arr);
 	    
 	    vector<int> dp(n+1);
-	    dp[0]=arr[0];
+	   // dp[0]=arr[0];
+	   int prev=arr[0];
+	   int prev2=0;
 	    for(int i=1;i<n;i++)
 	    {
-	        int notTake=dp[i-1];
+	        int notTake=prev;
 	        int take=arr[i];
-	        if(i>1) take+=dp[i-2];
-	        dp[i]=max(notTake,take);
+	        if(i>1) take+=prev2;
+	        int cur=max(notTake,take);
+	        prev2=prev;
+	        prev=cur;
 	    }
-	    return dp[n-1];
+	    return prev;
 	}
 };
 
