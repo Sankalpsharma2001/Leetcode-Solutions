@@ -12,37 +12,54 @@
 class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
+   //recursive
+        
         if(!root)
         {
-            root=new TreeNode(val);
-                return root;
+            TreeNode *t=new TreeNode(val);
+            return t;
         }
-        TreeNode *t=root;
+        if(root->val>val)
+        {
+           root->left=insertIntoBST(root->left,val);
+        }
+        else
+        {
+           root->right=insertIntoBST(root->right,val);
+        }
+        return root;
+   // iterative     
+        //         if(!root)
+//         {
+//             root=new TreeNode(val);
+//                 return root;
+//         }
+//         TreeNode *t=root;
         
-        TreeNode *pre=NULL;
-        while(t)
-        {
-            if(t->val>val)
-            {
-                pre=t;
-                t=t->left;
-            }
-            else if(t->val<val)
-            {
-                pre=t;
-                t=t->right;
-            }
-        }
-        if(pre->val<val)
-        {
-            pre->right=new TreeNode(val);
-        }
-       else
-       {
-            pre->left=new TreeNode(val);
+//         TreeNode *pre=NULL;
+//         while(t)
+//         {
+//             if(t->val>val)
+//             {
+//                 pre=t;
+//                 t=t->left;
+//             }
+//             else if(t->val<val)
+//             {
+//                 pre=t;
+//                 t=t->right;
+//             }
+//         }
+//         if(pre->val<val)
+//         {
+//             pre->right=new TreeNode(val);
+//         }
+//        else
+//        {
+//             pre->left=new TreeNode(val);
            
-       }
-       return root; 
+//        }
+//        return root; 
         
     }
 };
