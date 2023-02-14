@@ -35,27 +35,16 @@ bool isValid(int x,int y,int n,int m)
     
     vector<vector<int>> vis2(N,vector<int>(M,0));
     
-       for(int i=0;i<N;i++)
-       {
-           for(int j=0;j<M;j++)
-           {
-               if((i==0 || j==0) )
-               {
-                   if(vis1[i][j]==0)
-                 dfs(i,j,N,M,mat,vis1);   
-               }
-           }
-       }
-       for(int i=0;i<N;i++)
-       {
-           for(int j=0;j<M;j++)
-           {
-               if((i==N-1 || j==M-1) )
-               {if(vis2[i][j]==0)
-                 dfs(i,j,N,M,mat,vis2);   
-               }
-           }
-       }
+      for(int i=0;i<N;i++)
+      {
+          dfs(i,0,N,M,mat,vis1);
+          dfs(i,M-1,N,M,mat,vis2);
+      }
+       for(int i=0;i<M;i++)
+      {
+          dfs(0,i,N,M,mat,vis1);
+          dfs(N-1,i,N,M,mat,vis2);
+      }
        int ans=0;
         for(int i=0;i<N;i++)
        {
