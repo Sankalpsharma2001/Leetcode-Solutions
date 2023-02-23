@@ -49,5 +49,5 @@ You don't need to read input or print anything. Your task is to complete the fun
 
 <p><br>
 <span style="font-size:18px"><strong>Constraints:</strong><br>
-1 ≤ n,m ≤ 10<sup>3</sup></span></p>
+1 ≤ n*m ≤ 10</span><sup><span style="font-size:15px">6</span></sup></p>
 </div>
