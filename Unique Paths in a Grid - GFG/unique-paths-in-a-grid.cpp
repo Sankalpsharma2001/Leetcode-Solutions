@@ -21,7 +21,13 @@ class Solution {
     int uniquePaths(int n, int m, vector<vector<int>> &grid) {
         // code here
         vector<vector<int>> dp(n,vector<int>(m,-1));
-        return countPaths(0,0,n,m,grid,dp);
+        // return countPaths(0,0,n,m,grid,dp);
+         for(int i=1; i<n; i++) if(grid[i][0]) grid[i][0] = grid[i-1][0];
+        for(int i=1; i<m; i++) if(grid[0][i]) grid[0][i] = grid[0][i-1];
+        for(int i=1; i<n; i++) 
+        for(int j=1; j<m; j++)
+        if(grid[i][j]) grid[i][j] = (grid[i-1][j] + grid[i][j-1]) % 1000000007;
+        return grid[n-1][m-1];
     }
 };
 
