@@ -22,7 +22,7 @@ public:
     
     int solve ( vector<int>&arr1, vector<int>&arr2, int i, int j, int prev,vector<vector<int>> &dp  ){
         if ( i ==arr1.size()) return 0 ; 
-      j=upper_bound(arr2.begin(),arr2.end(),prev)-arr2.begin();
+      j=upper_bound(arr2.begin()+j,arr2.end(),prev)-arr2.begin();
         if(dp[i][j]!=-1)
             return dp[i][j];
         int take=1e9,nottake=1e9;
