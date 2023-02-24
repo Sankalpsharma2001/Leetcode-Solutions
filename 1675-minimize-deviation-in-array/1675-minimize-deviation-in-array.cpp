@@ -2,23 +2,26 @@ class Solution {
 public:
     int minimumDeviation(vector<int>& nums) {
         int n=nums.size();
-        set<int> s;
+        priority_queue<int> pq;
+        int mn=INT_MAX;
         for(int i=0;i<n;i++)
         {
             if(nums[i]%2)
-                s.insert(nums[i]*2);
-            else
-                s.insert(nums[i]);
+                nums[i]*=2;
+            pq.push(nums[i]);
+            mn=min(mn,nums[i]);
         }
-        int ans=*s.rbegin()-*s.begin();
-        while((*s.rbegin())%2==0)
+        int ans=pq.top()-mn;
+        while(pq.top()%2==0)
         {
-            int val=*s.rbegin();
-            s.erase(val);
-            s.insert(val/2);
-            
-            ans=min(ans,(*s.rbegin()-*s.begin()));
+            int x=pq.top();
+            pq.pop();
+            x/=2;
+            pq.push(x);
+            mn=min(mn,x);
+            ans=min(ans,pq.top()-mn);
         }
+        ans=min(ans,pq.top()-mn);
         return ans;
     }
     
