@@ -7,38 +7,30 @@ public:
             adj[it[0]].push_back({it[1],it[2]});
            
         }
-        queue<pair<int,int>> q;
-        vector<int> dis(n,INT_MAX);
-        q.push({src,0});
+       queue<pair<int,pair<int,int>>> q;
+        q.push({0,{src,0}});
+        vector<int> dis(n+1,1e9);
         dis[src]=0;
-        int ans=INT_MAX;
-        int stops=0;
-        while(stops<=k && !q.empty())
+        while(!q.empty())
         {
-            int size=q.size();
-            for(int i=0;i<size;i++)
+            auto f=q.front();
+            q.pop();
+            int stop=f.first;
+            int u=f.second.first;
+            int dist=f.second.second;
+            if(stop>k) continue;
+            for(auto &it:adj[u])
             {
-                pair<int,int> t=q.front();
-                q.pop();
-                int node=t.first;
-                int distance=t.second;
-                if(distance>dis[node]) continue;
-                dis[node]=distance;
-                for(auto &it:adj[node])
+                int v=it.first;
+                int w=it.second;
+                if(dist+w<dis[v] && stop<=k)
                 {
-                    if(it.second+distance>ans) continue;
-                    if(it.first==dst)
-                    {
-                        ans=min(ans,it.second+distance);
-                    }
-                    q.push({it.first,it.second+distance});
-                   
+                    dis[v]=dist+w;
+                    q.push({stop+1,{v,dis[v]}});
                 }
             }
-            stops++;
         }
-        if(ans==INT_MAX)
-            return -1;
-        return ans;
+       if(dis[dst]==1e9) return -1;
+        return dis[dst];
     }
 };
