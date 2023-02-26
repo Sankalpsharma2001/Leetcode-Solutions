@@ -1,43 +1,41 @@
 class Solution {
 public:
+    vector<vector<int>> adj; // Adjecancy List for the graph
+    vector<int> in; // In-degree of every node
+    vector<int> dp; // dp array to store minimun time to complete that course
+    
+    // dfs for solution in Top-Down manner
+    int dfs(int i,vector<int> &time){
+        if(dp[i] != -1){
+            return dp[i];
+        }
+        int ans = 0;
+        for(auto j:adj[i]){
+            ans = max(ans,dfs(j,time));
+        }
+        return dp[i] = (time[i] + ans);
+    }
+    
     int minimumTime(int n, vector<vector<int>>& relations, vector<int>& time) {
-        vector<vector<int>> adj(n+1);
-        vector<int> indegree(n+1,0);
-        for(auto &it:relations)
-        {
-            adj[it[0]].push_back(it[1]);
-            indegree[it[1]]++;
-        }
-        queue<int> q;
-        vector<int> dis(n+1,0);
-        for(int i=1;i<=n;i++)
-        {
-            if(indegree[i]==0)
-            {q.push(i);
-            dis[i]=time[i-1];}
-        }
-         
-        int ans=0;
+        adj = vector<vector<int>>(n);
+        in = vector<int> (n);
+        dp = vector<int> (n,-1);
         
-        while(!q.empty())
-        {
-            
-                auto f=q.front();
-                    q.pop();
-                
-                for(auto &it:adj[f])
-                {
-                    dis[it]=max(dis[it],dis[f]+time[it-1]);
-                  indegree[it]--;
-                    if(indegree[it]==0)
-                    {
-                        q.push(it);
-                    }
-                }
-           
+        for(auto i:relations){
+            // reversing the direction while inserting in adjacency list so it will be easy to traverse
+            adj[i[1] - 1].push_back(i[0] - 1);
+            // incrementing in-degree
+            in[i[0] - 1]++;
         }
-        return *max_element(dis.begin(),dis.end());
         
+        int ans = 0;
+        for(int i=0;i < n;i++){
+            // call dfs only if current node isn't visited and its in-degree is 0. 
+            if(dp[i] == -1 && in[i] == 0){
+                ans = max(ans,dfs(i,time));
+            }
+        }
         
+        return ans;
     }
 };
