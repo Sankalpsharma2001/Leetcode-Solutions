@@ -35,6 +35,7 @@ public:
                 {
                     if(!vis[it])
                     {
+                        if(it==n-1) return steps+1;
                         vis[it]=1;
                         q.push(it);
                     }
