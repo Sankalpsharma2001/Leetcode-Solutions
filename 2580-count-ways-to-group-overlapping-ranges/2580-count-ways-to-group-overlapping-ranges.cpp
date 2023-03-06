@@ -73,7 +73,12 @@ return res;
         {
             if(parent[i]==i) c++;
         }
-        return mypow(2,c,mod);
+        long long ans=1;
+       for(int i=1;i<=c;i++)
+       {
+           ans=((ans%mod)*2)%mod;
+       }
+        return ans;
 //         int x=ranges[0][1];
       
 //         vector<vector<int>> v;
