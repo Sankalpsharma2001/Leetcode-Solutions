@@ -7,29 +7,29 @@ using namespace std;
 // } Driver Code Ends
 //User function Template for C++
 
+#define ll long long
+
+#define vll vector<ll>
 class Solution
 {
     public:
-     bool check(vector<int> &a,int w,int k,long long int mid,int n)
+    bool check(vector<int> &a,int w,int k,long long int mid,int n)
      {
-         vector<int> v(n+1,0);
-         long long int add=0;
-         for(int i=0;i<n;i++)
-         {
-             add+=v[i];
-             if(a[i]+add<mid)
-             {
-                 long long int incre=mid-add-a[i];
-                 int idx=min(n,i+w);
-                 v[idx]-=incre;
-                 if(k<incre) return false;
-                 k-=incre;
-                 add=mid-a[i];
-                 
-             }
-             
-         }
-         return true;
+        vector<ll> pref(n+1,0);
+        ll val=0;
+        for(int i=0;i<n;i++)
+		{
+            if(i)
+			pref[i]+=pref[i-1];
+			if(a[i]+pref[i]<mid) 
+			{
+				ll x=mid-a[i]-pref[i];
+				val+=x;
+				pref[i]+=x;
+				pref[min(i+w,n)]-=x;
+			}
+		}
+        return val<=k;
      }
         long long int maximizeMinHeight(int n,int k,int w,vector <int> &a)
         {
