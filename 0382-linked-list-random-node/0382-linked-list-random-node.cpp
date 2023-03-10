@@ -10,18 +10,24 @@
  */
 class Solution {
 public:
-    vector<int> r;
+      ListNode* start;
     Solution(ListNode* head) {
-        while(head)
-        {
-            r.push_back(head->val);
-            head=head->next;
-        }
+        start=head;
     }
     
     int getRandom() {
-        int x=rand()%r.size();
-        return r[x];
+        int ans,len=1;
+        ListNode *s=start;
+        while(s)
+        {
+            if(rand()%len==0)
+            {
+                ans=s->val;
+            }
+            len++;
+            s=s->next;
+        }
+        return ans;
     }
 };
 
