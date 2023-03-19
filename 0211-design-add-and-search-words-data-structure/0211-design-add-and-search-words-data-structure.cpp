@@ -1,29 +1,70 @@
+ class Node{
+        public:
+        Node *child[26];
+        bool isEnd=false;
+         bool contain(char c)
+        {
+          return child[c-'a']!=NULL;
+        }
+         void add(char c,Node *t)
+       {
+        child[c-'a']=t;
+       }
+          Node *get(char c)
+         {
+         return child[c-'a'];
+          }
+    
+       bool getEnd()
+         {
+        return isEnd;
+        }
+        void setEnd()
+         {
+        isEnd=true;
+          }
+    };
 class WordDictionary {
 public:
-    unordered_map<int,vector<string>> m;
+   Node *root;
     WordDictionary() {
-        m.clear();
+        root=new Node();
     }
-    bool check(string &a,string &b)
+    bool find(int i,string word,Node *root)
     {
-        for(int i=0;i<a.size();i++)
+        if(i==word.size())
+            return root->getEnd();
+        char c=word[i];
+        if(c!='.')
         {
-            if(b[i]=='.') continue;
-            if(b[i]!=a[i]) return false;
+            return root->get(word[i]) && find(i+1,word,root->get(word[i]));
         }
-        return true;
+        else
+        {
+            for(int cnt=0;cnt<26;cnt++)
+            {
+                if(root->get(cnt+'a') && find(i+1,word,root->get(cnt+'a')))
+                    return true;
+            }
+            return false;
+        }
+        
     }
     void addWord(string word) {
-        m[word.size()].push_back(word);
+        Node *t=root;
+        for(char &c:word)
+        {
+            if(!t->contain(c))
+            {
+                t->add(c,new Node());
+            }
+            t=t->get(c);
+        }
+        t->setEnd();
     }
     
     bool search(string word) {
-        for(auto &it:m[word.size()])
-        {
-            if(check(it,word))
-                return true;
-        }
-        return false;
+        return find(0,word,root);
     }
 };
 
