@@ -7,7 +7,7 @@ public:
     vector<vector<int>> highestRankedKItems(vector<vector<int>>& grid, vector<int>& pricing, vector<int>& start, int k) {
         int m=grid.size(),n=grid[0].size();
          vector<vector<int>> ans;
-        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>> pq;
+        priority_queue<vector<int>,vector<vector<int>>> pq;
         vector<vector<int>> vis(m,vector<int>(n,0));
         queue<pair<int,int>> q;
         q.push({start[0],start[1]});
@@ -32,7 +32,7 @@ public:
                     {
                         pq.push({dis,val,x,y});
                     }
-                  
+                  if(pq.size()>k) pq.pop();
                 }
                 for(int dir=0;dir<4;dir++)
                 {
@@ -54,6 +54,7 @@ public:
             int x=f[2],y=f[3];
             ans.push_back({x,y});
         }
+        reverse(ans.begin(),ans.end());
         return ans;
         
     }
