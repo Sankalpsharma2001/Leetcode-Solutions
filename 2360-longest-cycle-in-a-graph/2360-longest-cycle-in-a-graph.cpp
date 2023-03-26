@@ -1,54 +1,45 @@
 class Solution {
 public:
-    int ans,c;
-    bool flag;
-    void dfs(int node,int par,vector<int> &vis,vector<int> &dvis,vector<vector<int>> &adj,vector<int> & count)
-    {
-        vis[node]=1;
-       dvis[node]=1;
-        if(par==-1)
-            count[node]=1;
-        else
-        count[node]=count[par]+1;
-    for(auto it:adj[node])
-    {
-        if(!vis[it])
-        {
-           
-            // count[it]=c;
-            dfs(it,node,vis,dvis,adj,count);
-           
-        }
-        else if(dvis[it]==1)
-        {
-           
-            ans=max(ans,count[node]-count[it]+1);
-            flag=true;
-            
-        }
-    }
-    dvis[node]=0;
-    }
     int longestCycle(vector<int>& edges) {
-        int n=edges.size();
-        vector<vector<int>> adj(n);
-        for(int i=0;i<n;i++)
-        {
-            if(edges[i]!=-1)
-            adj[i].push_back(edges[i]);
+          int n = edges.size();
+        vector<int>indeg(n);
+        vector<int>vis(n);
+        // count indegree of each node
+        for(int i=0; i<n; i++){
+            if(edges[i] != -1) indeg[edges[i]]++;
         }
-        flag=false;
-        ans=0;
-        vector<int> count(n,0),vis(n,0),dvis(n,0);
-        for(int i=0;i<n;i++)
-        {
-            if(!vis[i])
-            {
-                c=0;
-                count.clear();
-                dfs(i,-1,vis,dvis,adj,count);
+        // Kahn's algorithm
+        queue<int>q;
+        for(int i=0; i<n; i++){
+            if(indeg[i] == 0) q.push(i);
+        }
+        while(!q.empty()){
+            int top = q.front();
+            vis[top] = 1;
+            q.pop();
+            if(edges[top] != -1){
+                indeg[edges[top]]--;
+                if(indeg[edges[top]] == 0) q.push(edges[top]);
             }
         }
-        return flag==false?-1:ans;
+        int ans = -1;
+        for(int i=0; i<n; i++){
+            // If all our visited, that means we dont have a cycle
+            if(!vis[i]){
+                int start = i;
+                int curr = edges[i];
+                vis[i] = 1;
+                int c = 1;
+                // find cycle length
+                while(curr != start){
+                    if(indeg[curr] == 0) break;
+                    curr = edges[curr];
+                    vis[curr] = 1;
+                    c++;
+                }
+                ans = max(ans,c);   
+            }
+        }
+        return ans;
     }
 };
