@@ -13,22 +13,22 @@ class Solution
     {
         // code here
         int ans=0;
+        map<int,int> m;
+        m[0]=1;
+        int x=0;
         for(int i=0;i<s.size();i++)
         {
-            int l=0,u=0;
-            for(int j=i;j<s.size();j++)
+            if(isupper(s[i]))
             {
-                if(islower(s[j]))
-                {
-                    l++;
-                }
-                if(isupper(s[j]))
-                {
-                    u++;
-                }
-                 if(l==u) ans++;
+                x++;
             }
-           
+            else
+            x--;
+            if(m.find(x)!=m.end())
+            {
+                ans+=m[x];
+            }
+            m[x]++;
         }
         return ans;
         
