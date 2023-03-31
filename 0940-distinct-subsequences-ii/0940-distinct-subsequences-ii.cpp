@@ -1,23 +1,24 @@
 class Solution {
 public:
     int mod=1e9+7;
-    int solve(string &s,int i,vector<int> &dp)
-    {
-        if(i==s.size()) return 0;
-        if(dp[i]!=-1) return dp[i];
-        vector<int> vis(26,0);
-        int ans=0;
-        for(int j=i;j<s.size();j++)
-        {
-            if(vis[s[j]-'a']) continue;
-            vis[s[j]-'a']=1;
-                   ans=(ans+1+solve(s,j+1,dp))%mod;
-        }
-      return dp[i]=ans;
-    }
     int distinctSubseqII(string s) {
-      int n=s.size();
-        vector<int> dp(n,-1);
-        return solve(s,0,dp);
+        int n=s.size();
+        vector<long > dp(n+1,0);
+        dp[0]=1;
+        unordered_map<char,int> m;
+        for(int i=1;i<dp.size();i++)
+        {
+            char ch=s[i-1];
+              dp[i]=((2)*(dp[i-1]))%mod;
+            if(m.find(ch)!=m.end())
+            {
+                int j=m[ch];
+                dp[i]=(dp[i]-dp[j-1])%mod;
+            }
+           m[ch]=i;
+            
+        }
+        if(dp[n]<=0) dp[n]+=mod;
+        return dp[n]-1;
     }
 };
