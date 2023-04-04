@@ -1,20 +1,15 @@
 class Solution {
 public:
     int partitionString(string s) {
-        int n=s.size();
-        
-        unordered_map<char,int> mp;
-        int ans=1;
-        for(int i=0;i<n;i++)
-        {
-         mp[s[i]]++;
-            if(mp[s[i]]>1)
-            {
-                mp.clear();
-                mp[s[i]]++;
+        int i = 0, ans = 1,flag = 0;
+        while(i < s.size()){
+            int val = s[i] - 'a';
+            if( flag & (1<<val) ) {
+                flag = 0;
                 ans++;
             }
-            
+            flag = flag | (1<<val);
+            i++;
         }
         return ans;
     }
