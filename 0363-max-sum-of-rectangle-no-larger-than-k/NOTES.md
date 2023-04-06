@@ -1,0 +1,2 @@
+https://www.youtube.com/watch?v=yCQN096CwWM
+https://www.quora.com/Given-an-array-of-integers-A-and-an-integer-k-find-a-subarray-that-contains-the-largest-sum-subject-to-a-constraint-that-the-sum-is-less-than-k
