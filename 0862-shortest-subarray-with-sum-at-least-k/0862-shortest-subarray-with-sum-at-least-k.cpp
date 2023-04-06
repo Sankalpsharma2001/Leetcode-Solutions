@@ -18,9 +18,9 @@ public:
 };
     int shortestSubarray(vector<int>& nums, int k) {
       int n=nums.size();
-       // priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
+       priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> pq;
         
-       priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,Compare> pq;
+       // priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,Compare> pq;
         ll sum=0,ans=1e6;
        for(ll i=0;i<n;i++)
        {
