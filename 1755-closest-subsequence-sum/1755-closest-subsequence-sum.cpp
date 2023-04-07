@@ -51,10 +51,10 @@ class Solution
             if (it != right.end())
             {
                 ans = min(ans, (int) abs(goal - (sum + *it)));
-                auto it2 = it;
-                it2++;
-                if (it2 != right.end())
-                    ans = min(ans, (int) abs(goal - (sum + *it2)));
+                // auto it2 = it;
+                // it2++;
+                // if (it2 != right.end())
+                //     ans = min(ans, (int) abs(goal - (sum + *it2)));
             }
             if (it != right.begin())
             {
