@@ -37,11 +37,12 @@ class Solution
     {
 
         int n = nums.size();
-        // generate(0,n/2-1,nums,left);
-        // generate(n/2,n-1,nums,right);
+        vector<int> left,right;
+        generate(0,n/2,0,nums,left);
+        generate(n/2,n,0,nums,right);
         
-        vector<ll> left = get_subset_sums(nums, 0, n / 2 - 1);
-        vector<ll> right = get_subset_sums(nums, n / 2, n - 1);
+        // vector<ll> left = get_subset_sums(nums, 0, n / 2 - 1);
+        // vector<ll> right = get_subset_sums(nums, n / 2, n - 1);
         sort(right.begin(), right.end());
         int ans = INT_MAX;
         for (auto sum: left)
