@@ -1,43 +1,32 @@
 class Solution {
 public:
-    unordered_map<string,int> dp;
-    bool check(vector<int>& nums,int idx,int &n,int reqSum,int x)
-    {
-        if(x==0 && reqSum==0) return true;
-        if(idx==n)
-            return false;
-        string key=to_string(idx)+" "+to_string(reqSum)+" "+to_string(x);
-        if(dp.count(key))
-            return dp[key];
-        if(nums[idx]<=reqSum)
-        {
-            return dp[key]=check(nums,idx+1,n,reqSum-nums[idx],x-1) || check(nums,idx+1,n,reqSum,x);
-        }
-        else
-        {
-            return dp[key]=check(nums,idx+1,n,reqSum,x);
-        }
-        
-        
+//     s1 = sum of first set
+// s2 = sum of second set
+// n1 = size of first set
+// n2 = size of second set
+// s = s1 + s1 = sum of nums
+// n = n1 + n2 = size of nums
+// we are given that average of first set = average of second set
+// s1 / n1 = s2 / n2
+// replace s2 by s - s1 and n2 by n - n1
+// after solving the above equation
+// we get,
+// s1 = (s * n1) / n
+     bool check(int cur, int idx, int len, vector<vector<vector<bool>>>&dp,vector<int>&nums){
+        if(len == 0) return cur == 0;
+        if(idx == nums.size()) return false;
+        if(cur < 0) return false;
+        if(dp[idx][len][cur] == false) return false;
+        if(check(cur-nums[idx], idx+1, len-1, dp, nums)) return dp[idx][len][cur] = true;
+        if(check(cur, idx+1, len, dp, nums)) return dp[idx][len][cur] = true;
+        return dp[idx][len][cur] = false;
     }
+    
     bool splitArraySameAverage(vector<int>& nums) {
-        
-        int n=nums.size();
-        int sum=0;
-        for(auto &it:nums)
-            sum+=it;
-        // x is no of element in set 1
-        for(int x=1;x<n;x++)
-        {
-            if((sum*x)%n==0)
-            {
-                int reqSum=(sum*x)/n;
-                if(check(nums,0,n,reqSum,x))
-                {
-                    return true;
-                }
-            }
-        }
+        int n = nums.size(), sum = 0;
+        for(int i:nums) sum+=i;
+        vector<vector<vector<bool>>>dp(n+1, vector<vector<bool>>(n+1, vector<bool>(sum+1, true)));
+        for(int i = 1; i <= n-1; i++) if((sum*i)%n == 0) if(check((sum*i)/n, 0, i, dp, nums)) return true;
         return false;
     }
 };
