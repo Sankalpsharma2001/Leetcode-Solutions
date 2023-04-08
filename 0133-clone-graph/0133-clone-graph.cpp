@@ -20,33 +20,29 @@ public:
 */
 
 class Solution {
+    private:
+    unordered_map<Node*, Node*> copies;
 public:
-    Node* dfs(Node *node,map<Node*,Node*> &adj)
-    {
-        vector<Node*>neighbour;
-        Node *clone=new Node(node->val);
-        adj[node]=clone;
-        for(auto &it:node->neighbors)
-        {
-            if(adj.find(it)!=adj.end())
-            {
-                neighbour.push_back(adj[it]);
-            }
-            else
-            {
-                neighbour.push_back(dfs(it,adj));
-            }
-        }
-        clone->neighbors=neighbour;
-        return clone;
-    }
     Node* cloneGraph(Node* node) {
-        if(!node) return NULL;
-        map<Node*,Node*> adj;
-        if(node->neighbors.size()==0)
-        {
-            return new Node(node->val);
+           if (!node) {
+            return NULL;
         }
-        return dfs(node,adj);
+        Node* copy = new Node(node -> val, {});
+        copies[node] = copy;
+        queue<Node*> todo;
+        todo.push(node);
+        while (!todo.empty()) {
+            Node* cur = todo.front();
+            todo.pop();
+            for (Node* neighbor : cur -> neighbors) {
+                if (copies.find(neighbor) == copies.end()) {
+                    copies[neighbor] = new Node(neighbor -> val, {});
+                    todo.push(neighbor);
+                }
+                copies[cur] -> neighbors.push_back(copies[neighbor]);
+            }
+        }
+        return copy;
+    
     }
 };
