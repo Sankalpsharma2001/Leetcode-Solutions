@@ -15,6 +15,7 @@ public:
             if (i == m-1 && j == n-1) {
                 return (int)d;
             }
+            if(grid[i][j]==0) continue;
             for (int k = j+1; k <= min(j+grid[i][j], n-1); k++) {
                 if (distance[i][k] > d+1) {
                     distance[i][k] = d+1;
