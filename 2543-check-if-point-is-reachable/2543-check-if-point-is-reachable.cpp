@@ -2,7 +2,7 @@ class Solution {
 public:
    
     bool isReachable(int targetX, int targetY) {
- if(targetX > 1 && targetY > 1){
+ if(targetX >= 1 && targetY >= 1){
             while(targetX % 2 == 0)
                 targetX /= 2;
             while(targetY % 2 == 0)
