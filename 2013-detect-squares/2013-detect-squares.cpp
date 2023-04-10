@@ -1,36 +1,37 @@
 class DetectSquares {
 public:
-    vector<unordered_map<int, int>> x_axis;
+    vector<vector<int>> p;
+    
     DetectSquares() {
-         x_axis = vector<unordered_map<int, int>>(1005);
+        for(int i = 0; i<1001; i++) {
+            vector<int> temp(1001, 0);
+            p.push_back(temp);
+        }
     }
     
     void add(vector<int> point) {
-        int x=point[0],y=point[1];
-        x_axis[x][y]++;
+        p[point[0]][point[1]]++;
     }
     
     int count(vector<int> point) {
-        int x=point[0],y=point[1];
-        int ans=0;
-        for(auto &it:x_axis[x])
-        {
-            int y1=it.first;
-            int fre=it.second;
-            if(y1==y) continue;
-            int len=abs(y-y1);
-            if(x+len<=1000)
-            {
-                int newX=x+len;
-                ans+=(x_axis[x][y1]*x_axis[newX][y]*x_axis[newX][y1]);
+        int res = 0;
+        int x = point[0], y = point[1];
+        for(int len = 1; len < 1001; len++) {
+            if(y + len <= 1000) {
+                //First Quadrant
+                if(x + len <= 1000) res += (p[x][y+len]*p[x+len][y]*p[x+len][y+len]);
+                //Second Quadrant
+                if(x - len >= 0) res += (p[x][y+len]*p[x-len][y]*p[x-len][y+len]);
             }
-            if(x-len>=0)
-            {
-                int newX=x-len;
-                 ans+=(x_axis[x][y1]*x_axis[newX][y]*x_axis[newX][y1]);
+            if(y - len >= 0) {
+                //Fourth Quadrant
+                if(x + len <= 1000) res += (p[x][y-len]*p[x+len][y]*p[x+len][y-len]);
+                //Third Quadrant
+                if(x - len >= 0) {res += (p[x][y-len]*p[x-len][y]*p[x-len][y-len]);
             }
         }
-        return ans;
+        }
+        return res;
         
     }
 };
