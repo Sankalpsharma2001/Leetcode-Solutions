@@ -1,31 +1,48 @@
 class Solution {
 public:
+      static bool compare(vector<int>& a, vector<int>& b)
+    {
+        if(a[1] == b[1])
+            return a[0] > b[0];
+        else
+            return a[1] < b[1];
+    }
+    
     int intersectionSizeTwo(vector<vector<int>>& intervals) {
-       sort(intervals.begin(),intervals.end(),[](vector<int> &a,vector<int> &b){
-          if(a[1]!=b[1])
-              return a[1]<b[1];
-           else
-               return a[0]>b[0];
-       });
-        int ans=0;
-        int n=intervals.size();
-        int x=-1,y=-1;
-        for(auto &it:intervals)
+        
+        int n = intervals.size();
+        
+        
+        sort(intervals.begin(), intervals.end(), compare);
+        
+        vector<int> res;
+        
+        res.push_back(intervals[0][1] - 1);
+        
+        res.push_back(intervals[0][1]);
+        
+        for(int i = 1; i < n; i++)
         {
-            if(it[0]<=x) continue;
-            if(it[0]>y)
+            int start = intervals[i][0];
+            
+            int end = intervals[i][1];
+            
+            if(start > res.back())
             {
-                y=it[1];
-                x=it[1]-1;
-                ans+=2;
+                res.push_back(end - 1);
+                
+                res.push_back(end);
             }
-            else
+            else if(start == res.back())
             {
-                x=y;
-                y=it[1];
-                ans++;
-            }    
+                res.push_back(end);
+            }
+            else if(start > res[res.size() - 2])
+            {
+                res.push_back(end);
+            }
         }
-        return ans;
+        
+        return res.size();
     }
 };
