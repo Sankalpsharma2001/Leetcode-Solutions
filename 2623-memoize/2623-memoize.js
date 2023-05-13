@@ -2,22 +2,16 @@
  * @param {Function} fn
  */
 function memoize(fn) {
-    const cache={};
-    return function(...args) {
-        let key=JSON.stringify(args);
-        if(key in cache)
-            {
-                return cache[key];
-            }
-       const result = fn.apply(this, args);
-    cache[key] = result;
-    
-    return result;
-    }
-}
+ const mem = {};
+  return function(...args) {
+    if (mem[args] !== undefined) return mem[args];
+    mem[args] = fn(...args);
+    return mem[args]
+  }
+  };
 
 
-/** 
+/**
  * let callCount = 0;
  * const memoizedFn = memoize(function (a, b) {
  *	 callCount += 1;
@@ -25,5 +19,5 @@ function memoize(fn) {
  * })
  * memoizedFn(2, 3) // 5
  * memoizedFn(2, 3) // 5
- * console.log(callCount) // 1 
+ * console.log(callCount) // 1
  */
