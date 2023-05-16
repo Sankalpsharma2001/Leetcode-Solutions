@@ -12,7 +12,7 @@ public:
     bool checkInclusion(string s1, string s2) {
        if(s2.size()<s1.size()) return false;
         vector<int> freqS1(26, 0);
-        for(char c: s1) freqS1[c-'a']++;
+        for(char &c: s1) freqS1[c-'a']++;
         
         vector<int> freqS2(26, 0);
         int i=0, j=0;
