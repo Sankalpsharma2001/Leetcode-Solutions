@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void dfs(unordered_map<string,vector<pair<string,double>>> adj,string src,string &des,unordered_set<string> &vis,double &ans,double temp)
+    void dfs(unordered_map<string,vector<pair<string,double>>> &adj,string src,string &des,unordered_set<string> &vis,double &ans,double temp)
     {
         if(vis.find(src)!=vis.end()) return;
         vis.insert(src);
