@@ -3,15 +3,15 @@
  * @return {Array}
  */
 Array.prototype.groupBy = function(fn) {
-     const ans = {}
-    for(let e of this){
-        const key = fn((e))
-        ans[key] ||=[]
-        ans[key].push(e)
-    }
-    return ans
-};
+    final = {};
 
+    for(const x of this){
+        final[fn(x)] = final[fn(x)] || [];
+        final[fn(x)].push(x);
+    }
+
+    return final;
+};
 /**
  * [1,2,3].groupBy(String) // {"1":[1],"2":[2],"3":[3]}
  */
