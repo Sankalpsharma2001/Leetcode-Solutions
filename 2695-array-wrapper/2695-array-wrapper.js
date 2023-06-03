@@ -2,20 +2,17 @@
  * @param {number[]} nums
  */
 var ArrayWrapper = function(nums) {
-      this.nums = nums;
+    this.nums = nums;
 };
 
 ArrayWrapper.prototype.valueOf = function() {
-    let sum = 0;
-    for (let i = 0; i < this.nums.length; i++) {
-        sum += this.nums[i];
-    }
-    return sum;
+    return this.nums.reduce((a,b) => a+b,0);
 }
 
 ArrayWrapper.prototype.toString = function() {
-       return '[' + this.nums.toString() + ']';
+    return JSON.stringify(this.nums);
 }
+
 
 /**
  * const obj1 = new ArrayWrapper([1,2]);
