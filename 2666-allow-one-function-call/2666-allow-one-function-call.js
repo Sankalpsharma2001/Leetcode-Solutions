@@ -2,16 +2,18 @@
  * @param {Function} fn
  * @return {Function}
  */
-var once = function (fn) {
-  let c = 0;
-  return function (...args) {
-    if (!c) {
-      c = 1;
-      return fn(...args);
+var once = function(fn) {
+    var called = false;
+    
+    return function(...args){
+        if (called) {
+            return undefined;
+        }
+        else {
+            called = true;
+            return fn(...args);
+        }
     }
-
-    return undefined;
-  };
 };
 
 /**
