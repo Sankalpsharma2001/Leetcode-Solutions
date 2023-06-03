@@ -1,32 +1,18 @@
-/**
- * @param {Function} fn
- * @param {number} t
- * @return {Function}
- */
-var throttle = function(fn, t) {
-  let cache;
-  let pending = false;
-  let res = (...args) => {
-      if(!pending){
-          cache = undefined;
-          pending = true;
-          setTimeout(()=>{
-              pending = false;
-              if(cache!==undefined){
-                  res(...cache);
-              }
-          },t);
-          fn(...args);
-      } else {
-          cache = args;
-      }
-  }
-  return res;
-};
+var throttle = function (fn, t) {
+    let curArgs = null
+    let delay = null
 
-
-/**
- * const throttled = throttle(console.log, 100);
- * throttled("log"); // logged immediately.
- * throttled("log"); // logged at t=100ms.
- */
+    return function throttler(...args) {
+        if (delay) curArgs = args
+        else {
+            fn(...args)
+            delay = setTimeout(_ => {
+                delay = null
+                if (curArgs) {
+                    throttler(...curArgs)
+                    curArgs = null
+                }
+            }, t)
+        }
+    }
+}
