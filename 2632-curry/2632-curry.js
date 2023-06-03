@@ -4,16 +4,13 @@
  */
 var curry = function(fn) {
    return function curried(...args) {
-        if (fn.length === args.length) {
-            return fn(...args);
-        } else {
-            return function(...newArgs) {
-                return curried(...args, ...newArgs)
-            }
-        }
-    };
-};
+      if(args.length >= fn.length) {
+         return fn(...args);
+      }
 
+      return (...nextArgs) => curried(...args, ...nextArgs);
+   };
+};
 /**
  * function sum(a, b) { return a + b; }
  * const csum = curry(sum);
