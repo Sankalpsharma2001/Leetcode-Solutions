@@ -1,70 +1,57 @@
 class Solution {
 public:
-    vector<int> prefix_function(string s)
+    vector<int> calculateZ(string &s)
 {
-    vector<int> lps(s.size(),0);
-    lps[0]=0;
-    int len=0,i=1;
-    while(i<s.size())
+    int n = s.size();
+    vector<int> z(n);
+    z[0] = 0;
+   int left=0,right=0;
+    for(int k=1;k<s.size();k++)
     {
-       if(s[i]==s[len])
-       {
-        lps[i]=len+1;
-        len++,i++;
-       }
-       else
-       {
-        if(len!=0)
+      if(k>right)
+      {
+        left=right=k;
+        while(right<s.size() && s[right]==s[right-left])
         {
-            len=lps[len-1];
+          right++;
+        }
+        z[k]=right-left;
+        right--;
+      }
+      else
+      {
+        // we are operating inside box 
+        int k1=k-left;
+        // if value does not stretches till right bound then just copy it 
+        if(z[k1]<right-k+1)
+        {
+          z[k]=z[k1];
         }
         else
         {
-            lps[i]=0;
-            i++;
+          left=k;
+          while(right<s.size() && s[right]==s[right-left])
+          {right++;
+          }
+          z[k]=right-left;
+          right--;
         }
-       }
-    }
-        return lps;
-} 
+      } 
+    } 
+    return z;   
+
+}
     int strStr(string haystack, string needle) {
-        
- vector<int> pi=prefix_function(needle);
-//         int pos=-1;
-//         int i=0,j=0;
-//         while(j<haystack.size())
-//         {
-//             if(haystack[j]==needle[i])
-//             {
-//                 i++;j++;
-//             }
-//             else
-//             {
-//                 if(i!=0)
-//                     i=pi[i-1];
-//                 else
-//                     j++;
-//             }
-//             if(i==needle.size())
-//             {
-//                return j-needle.size();
-               
-//             }
-//         }
-//         return pos;
-         int m = haystack.size(), n = needle.size();
-        for (int i = 0; i <= m - n; i++) {
-            int j = 0;
-            while(j<n){
-                if (haystack[i + j] != needle[j]) {
-                    break;
-                }
-                j++;
-            }
-            if (j == n) {
-                return i;
-            }
-        }
-        return -1; 
+         string s=needle+'$'+haystack;
+  vector<int> z=calculateZ(s);
+  vector<int> ans;
+  for(int i=0;i<z.size();i++)
+  {
+    if(z[i]==needle.size())
+    {
+      return i-needle.size()-1  ;
+    }
+  }
+        return -1;
     }
 };
