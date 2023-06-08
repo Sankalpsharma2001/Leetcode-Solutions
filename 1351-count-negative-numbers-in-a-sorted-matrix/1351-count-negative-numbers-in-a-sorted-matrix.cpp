@@ -22,9 +22,24 @@ public:
     }
     int countNegatives(vector<vector<int>>& grid) {
         int n=grid.size(),m=grid[0].size(),ans=0;
-        for(vector<int> &x:grid)
+        // for(vector<int> &x:grid)
+        // {
+        //     ans+=count(x,m);
+        // }
+        // return ans;
+        int r=n-1,c=0;
+        while(r>=0 && c<m)
         {
-            ans+=count(x,m);
+            if(grid[r][c]<0)
+            {
+                 ans+=(m-c);
+               r--;
+            }
+            else
+            {
+               
+                c++;
+            }
         }
         return ans;
     }
