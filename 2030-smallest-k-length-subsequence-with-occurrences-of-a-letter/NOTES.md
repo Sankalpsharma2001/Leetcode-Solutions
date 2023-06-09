@@ -1,0 +1,1 @@
+https://leetcode.com/problems/smallest-k-length-subsequence-with-occurrences-of-a-letter/discuss/2421239/C%2B%2B-or-Code-for-Beginners-or-Stack-or-Well-Commented-Code-in-Detail
