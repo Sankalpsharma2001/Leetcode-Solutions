@@ -6,32 +6,18 @@ public:
         
         for(int i=n-1;i>=0;i--)
         {
+            int idx=m-1;
             for(int j=m-1;j>=0;j--)
             {
+                if(box[i][j]=='*')
+                {
+                    idx=j-1;
+                }
                 if(box[i][j]=='#')
                 {
-                    bool flag=false;
-                    int idx=j;
-                    for(int k=j+1;k<m;k++)
-                    {
-                        if(box[i][k]=='.')
-                        {
-                            flag=true;
-                          idx=k;
-                            
-                        }
-                        else if(box[i][k]=='*' || box[i][k]=='#')
-                        {
-                            
-
-                            break;
-                        }
-                    }
-                    if(flag && idx!=j)
-                    {
-                        box[i][j]='.';
-                        box[i][idx]='#';
-                    }
+                    box[i][j]='.';
+                    box[i][idx]='#';
+                    idx-=1;
                 }
             }
         }
