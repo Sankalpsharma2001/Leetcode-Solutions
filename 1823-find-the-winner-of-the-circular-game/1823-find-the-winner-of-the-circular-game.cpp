@@ -1,25 +1,11 @@
 class Solution {
 public:
-    void josephus(vector<int> &s,int i,int k)
+    int josephus(int n,int k)
     {
-        if(s.size()==1)
-        {
-            return; 
-        }
-      
-        i+=k;
-        i%=s.size();
-        s.erase(s.begin()+i);
-        josephus(s,i,k);
+        if(n==1) return 0;
+        return (josephus(n-1,k)+k)%n;
     }
     int findTheWinner(int n, int k) {
-        vector<int> s(n);
-        for(int i=0;i<n;i++)
-        {
-            s[i]=(i+1);
-        }
-        --k;
-         josephus(s,0,k);
-        return s[0];
+        return josephus(n,k)+1;
     }
 };
