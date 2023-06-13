@@ -14,7 +14,7 @@ public:
         while(start <= end)
         {
             int mid = start + (end - start) / 2;
-			// a[x] : matrix[x / m][x % m] formulae
+			// a[x] : matrix[x / m][x % m] formula
             int ind = matrix[mid/m][mid%m];
             if (target == ind)
                 return true;
