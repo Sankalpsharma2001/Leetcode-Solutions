@@ -2,15 +2,14 @@ class Solution {
 public:
     int check(vector<int> nums,long long val)
     {
-        vector<long long int> a(nums.begin(),nums.end());
+       long long  x=0;
         int n=nums.size();
-        for(int i=0;i<n-1;i++)
+        for(int i=0;i<n;i++)
         {
-            if(a[i]>val)
-            return false;
-            a[i+1]-=(val-a[i]);
+          x+=(val-nums[i]);
+            if(x<0) return false;
         }
-        return (a[n-1]<=val);
+        return x>=0;
     }
     int minimizeArrayValue(vector<int>& nums) {
         long long low=0,high=1e10,ans=0;
