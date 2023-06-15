@@ -18,44 +18,39 @@ public:
         return to_string(root->val)+"#"+solve(root->left)+solve(root->right);
     }
     string serialize(TreeNode* root) {
-       string x=solve(root);
-        // cout<<x<<" ";
-        return x;
+      if(!root) {
+       return "NULL,";
+    }
+    return to_string(root->val)+","+serialize(root->left)+serialize(root->right);
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        TreeNode *root=NULL;
+     queue<string> q;
         string s="";
         for(int i=0;i<data.size();i++)
         {
-            if(data[i]=='#')
+            if(data[i]==',')
             {
-                int num=stoi(s);
-                root=build(root,num);
+                q.push(s);
                 s="";
-                
             }
             else
             {
                 s+=data[i];
             }
         }
-        return root;
+          
+           return deserialize_helper(q);
     }
-    TreeNode *build(TreeNode *root,int num)
+       TreeNode *deserialize_helper(queue<string> &q)
     {
-        if(root==NULL) {
-            return new TreeNode(num);
-        }
-        if(num>root->val)
-        {
-            root->right=build(root->right,num);
-        }
-        if(num<root->val)
-        {
-            root->left=build(root->left,num);
-        }
+        string s=q.front();
+        q.pop();
+        if(s=="NULL") return NULL;
+        TreeNode *root=new TreeNode(stoi(s));
+        root->left=deserialize_helper(q);
+        root->right=deserialize_helper(q);
         return root;
     }
 };
