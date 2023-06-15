@@ -11,12 +11,6 @@ class Codec {
 public:
 
     // Encodes a tree to a single string.
-    string solve(TreeNode* root)
-    {
-         if(!root)
-            return "";
-        return to_string(root->val)+"#"+solve(root->left)+solve(root->right);
-    }
     string serialize(TreeNode* root) {
       if(!root) {
        return "NULL,";
