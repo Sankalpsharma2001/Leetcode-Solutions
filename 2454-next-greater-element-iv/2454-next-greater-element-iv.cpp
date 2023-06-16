@@ -1,24 +1,23 @@
 class Solution {
 public:
     vector<int> secondGreaterElement(vector<int>& nums) {
-        int n=nums.size();
-        vector<int> ans(n,-1);
-        stack<int> st;
-        multiset<vector<int>> mt;
-        st.push(0);
-        for(int i=1;i<n;i++)
-        {
-            while(!mt.empty() && nums[i]>(*mt.begin())[0])
-            {
-                ans[(*mt.begin())[1]]=nums[i];
-                mt.erase(mt.begin());
+         int n = nums.size();
+        vector<int> ans(nums.size(), -1);
+        vector<int> st, st2, tmp;
+        for(int i = 0; i < n; i++) {
+            while(!st2.empty() && nums[st2.back()] < nums[i]) {
+                ans[st2.back()] = nums[i];
+                st2.pop_back();
             }
-            while(!st.empty() && nums[i]>nums[st.top()])
-            {
-                mt.insert({nums[st.top()],st.top()});
-                st.pop();
+            while(!st.empty() && nums[st.back()] < nums[i]) {
+                tmp.push_back(st.back());
+                st.pop_back();
             }
-            st.push(i);
+            while(!tmp.empty()) {
+                st2.push_back(tmp.back());
+                tmp.pop_back();
+            }
+            st.push_back(i);
         }
         return ans;
     }
