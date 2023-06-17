@@ -5,7 +5,7 @@ public:
     {
         if(index==s.size())
         {
-            return isRepeated==0;
+            return isRepeated;
         }
         if(dp[index][isRepeated][flag][mask]!=-1) return dp[index][isRepeated][flag][mask];
         int range=(flag)?s[index]-'0':9;
@@ -28,6 +28,6 @@ public:
         n=pow(10,n);
         n--;
         string s=to_string(n);
-        return digitDP(s,0,0,1,0);
+        return (n)-digitDP(s,0,0,1,0)+1;
     }
 };
