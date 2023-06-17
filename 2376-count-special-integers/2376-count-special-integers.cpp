@@ -2,7 +2,7 @@ class Solution {
 public:
     // same ques
     // https://leetcode.com/problems/numbers-with-repeated-digits/?envType=list&envId=ebldwadv
-     int dp[10][10][2][1<<16];
+     int dp[10][10][2][1<<11];
     int digitDP(string &s,int index,int isRepeated,int flag,int mask)
     {
         if(index==s.size())
