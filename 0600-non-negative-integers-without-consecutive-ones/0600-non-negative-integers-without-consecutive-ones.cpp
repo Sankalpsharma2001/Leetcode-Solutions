@@ -8,18 +8,16 @@ public:
             return 1;
         }
         if(dp[index][prev][flag]!=-1) return dp[index][prev][flag];
-        int range=(flag)?1:s[index]-'0';
-        
+        int range=(flag==1)?s[index]-'0':1;
+         
         int ans=0;
         for(int i=0;i<=range;i++)
         {
-            int newFlag=flag;
-            if(i<range)
-                newFlag=true;
-            if(prev!=1 || i!=1)
-            {
+             if(prev==1 && i==1) continue;
+            int newFlag=(flag && i==range)?1:0;
+            //the digit at the ith position is smaller than the digit at the ith position of the number the number has already become smaller so we can set the flag as 0
                 ans+=digitDP(s,index+1,i,newFlag);
-            }
+            
         }
         return dp[index][prev][flag]=ans;
             
@@ -35,7 +33,7 @@ public:
             
         }
         reverse(s.begin(),s.end());
-        return digitDP(s,0,0,0);
+        return digitDP(s,0,0,1);
         
     }
 };
