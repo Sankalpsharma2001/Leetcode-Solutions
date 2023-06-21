@@ -1,48 +1,51 @@
+class TrieNode {
+    public:
+    TrieNode *children[26] = {NULL};
+    bool endOfWord = false;
+};
 class Solution {
 public:
-     struct Trie {
-        unordered_map<char, Trie*> leaves;
-        // Lexographically sorted suggestion till each char 
-        vector<string> suggestions;
-    };
-    
-    void insertTrie(Trie* root, string word) {
-        for(const char& c: word) {
-            if(root->leaves.find(c) == root->leaves.end())
-                root->leaves[c] = new Trie();
-            root = root->leaves[c];
-            
-            // Add the current word as suggestion if we dont have enough suggestions
-            if(root->suggestions.size() < 3)
-                root->suggestions.push_back(word);
+    void insertWord(TrieNode *trie, string &word) {
+        for (char &c : word) {
+            int index = c - 'a';
+            if (!trie->children[index])
+                trie->children[index] = new TrieNode;
+            trie = trie->children[index];
         }
+        trie->endOfWord = true;
     }
-    
-    
-    vector<vector<string>> suggestionTrie(vector<string>& products, string searchWord) {
-        vector<vector<string>> result(searchWord.size());
-        // sort the words 
-        sort(begin(products), end(products));
-        // Create the Trie, since the words are sorted
-        // so the suggestions are also lexographically sorted
-        Trie *root = new Trie();
-        for( string &word: products)
-            insertTrie(root, word);
-        
-        string prefix;
-        for(int i = 0; i < searchWord.size(); i++) {
-            auto it = root->leaves.find(searchWord[i]);
-            if(it != root->leaves.end()) {
-                root = it->second;
-            }
-            else
-                break;
-            // add suggestions if any for the current char
-            result[i] = root->suggestions;
+    vector<string> searchWord(TrieNode *trie, string &prefix) {
+        vector<string> result;
+        for (char &c : prefix) {
+            int index = c - 'a';
+            if (!trie->children[index])
+                return {};
+            trie = trie->children[index];
         }
+        dfs(trie, prefix, result);
         return result;
     }
-    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord)    {
-        return suggestionTrie(products, searchWord);
+    void dfs(TrieNode *trie, string pre, vector<string> &result) {
+        if (result.size() == 3)
+            return;
+        if (trie->endOfWord)
+            result.push_back(pre);
+        
+        for (int i = 0; i < 26; i++) {
+            if (trie->children[i])
+                dfs(trie->children[i], pre + (char)(i + 'a'), result);
+        }
+    }
+    vector<vector<string>> suggestedProducts(vector<string>& products, string search) {
+        TrieNode *trie = new TrieNode;
+        for (string &prod : products)
+            insertWord(trie, prod);
+        vector<vector<string>> result;
+        string prefix;
+        for (char &c : search) {
+            prefix += c;
+            result.push_back(searchWord(trie, prefix));
+        }
+        return result;
     }
 };
