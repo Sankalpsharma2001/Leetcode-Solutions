@@ -106,8 +106,7 @@ class Solution{
         sum += root->data;
 
         count += mp[sum-k];
-        if(sum == k)
-            count++;
+       
             
         mp[sum]++;
         
@@ -120,6 +119,7 @@ class Solution{
     {
           int count = 0;
         unordered_map<int, int> mp;
+        mp[0]++;
         check(root, k, count, 0, mp);
         return count;
     }
