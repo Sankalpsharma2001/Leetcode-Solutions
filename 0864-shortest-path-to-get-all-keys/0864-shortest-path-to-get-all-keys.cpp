@@ -20,7 +20,7 @@ public:
                 vis[i][j][0]=1;    
                 q.push({{i,j},0});  
                 }
-                if(grid[i][j]>='A' && grid[i][j]<='F')
+                if(grid[i][j]>='a' && grid[i][j]<='f')
                     keys++;
             }
         }
@@ -51,7 +51,7 @@ public:
                         }
                         else if(grid[x][y]>='A' && grid[x][y]<='F')
                         {
-                            if(!(mask& (1<<(grid[x][y]-'A')))) continue;
+                            if(!(mask& (1<<(grid[x][y]-'A')))) continue; // we cant move 
                         }
                         if(!vis[x][y][newMask])
                         {
