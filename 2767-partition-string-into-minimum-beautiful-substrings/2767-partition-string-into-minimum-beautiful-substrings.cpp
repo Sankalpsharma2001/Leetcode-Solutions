@@ -34,27 +34,26 @@ public:
         }
         return (isFive(ans));
     }
-    int dp[16];
-    int solve(int i,int n,string &s)
+    int dp[16][16];
+    int solve(int i,int j,string &s)
     {
-        if(i>=n) return 0;
-        if(dp[i]!=-1) return dp[i];
+        if(i==j) return s[i]=='1'?0:1e9;
+        if(dp[i][j]!=-1) return dp[i][j];
         int ans=1e9;
-        
-        for(int idx=i;idx<n;idx++)
+        if(check(i,j,s)) return 0;
+        for(int idx=i;idx<j;idx++)
         {
-            if(check(i,idx,s))
-            {
-            int t=1+solve(idx+1,n,s);
+            
+            int t=1+solve(i,idx,s)+solve(idx+1,j,s);
             ans=min(ans,t);
-            }
+            
         }
-        return dp[i]=ans;
+        return dp[i][j]=ans;
     }
     int minimumBeautifulSubstrings(string s) {
         int n=s.size();
         memset(dp,-1,sizeof(dp));
         int ans=solve(0,n,s);
-        return ans==1e9?-1:ans;
+        return ans==1e9?-1:ans+1;
     }
 };
