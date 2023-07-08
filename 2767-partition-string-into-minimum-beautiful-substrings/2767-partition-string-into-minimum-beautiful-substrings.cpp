@@ -38,7 +38,7 @@ public:
     int solve(int i,int n,string &s)
     {
         if(i>=n) return 0;
-        if(dp[i]!=-1) return dp[n];
+        if(dp[i]!=-1) return dp[i];
         int ans=1e9;
         
         for(int idx=i;idx<n;idx++)
@@ -49,7 +49,7 @@ public:
             ans=min(ans,t);
             }
         }
-        return dp[n]=ans;
+        return dp[i]=ans;
     }
     int minimumBeautifulSubstrings(string s) {
         int n=s.size();
