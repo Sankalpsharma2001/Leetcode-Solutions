@@ -1,3 +1,2 @@
-select max(e2.Salary) as SecondHighestSalary
-from Employee e1, Employee e2
-where e1.Salary > e2.Salary
+
+select max(salary) as SecondHighestSalary from employee e1 where 1=(select count(distinct salary) from employee e2 where e2.salary>e1.salary)
