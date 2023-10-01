@@ -29,7 +29,7 @@ public:
         }
         return dp[m][n];
     }
-    int solveRecursion(string s,string t,int n,int m, vector<vector<int>> &dp)
+    int solveRecursion(string &s,string &t,int n,int m, vector<vector<int>> &dp)
     {
         if(n==0 && m==0) return 1;
         if(m==0) return 1;
@@ -41,7 +41,7 @@ public:
             
         
     }
-    int numDistinct(string s, string t) {
+    int numDistinct(string &s, string &t) {
         vector<vector<int>> dp(s.size()+1,vector<int>(t.size()+1,-1));
        return solveRecursion(s,t,s.size(),t.size(),dp);
         
